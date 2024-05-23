@@ -25,6 +25,30 @@ from zeep.exceptions import Fault
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+import logging.config
+
+logging.config.dictConfig({
+    'version': 1,
+    'formatters': {
+        'verbose': {
+            'format': '%(name)s: %(message)s'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'zeep.transports': {
+            'level': 'DEBUG',
+            'propagate': True,
+            'handlers': ['console'],
+        },
+    }
+})
 
 class axl(object):
     """
@@ -1983,24 +2007,24 @@ class axl(object):
         location="Hub_None",
         phone_template="Standard 8861 SIP",
         common_device_config="",
-	css="",
+	    css="",
         aar_css="",
         subscribe_css="",
         ownerUserName="",
-	securityProfileName="",
+	    securityProfileName="",
         lines=[],
         dev_class="Phone",
-        protocol="SCCP",
+        protocol="SIP",
         softkey_template="Standard User",
-        enable_em="true",
+        enable_em="False",
         em_service_name="Extension Mobility",
         em_service_url=False,
         em_url_button_enable=False,
         em_url_button_index="1",
         em_url_label="Press here to logon",
         ehook_enable=1,
-	enableActivationID = 'True',
-    	allowMraMode = 'True',
+	    enableActivationId = 'false',
+    	allowMraMode = 'false',
     ):
         """
         lines takes a list of Tuples with properties for each line EG:
@@ -2059,7 +2083,7 @@ class axl(object):
             "automatedAlternateRoutingCssName": aar_css,
             "subscribeCallingSearchSpaceName": subscribe_css,
 	    "ownerUserName": ownerUserName,
-	    "enableActivationID": True,
+	    "enableActivationID": False ,
 	    "allowMraMode": True,
             "lines": {"line": []},
             "services": {"service": []},
